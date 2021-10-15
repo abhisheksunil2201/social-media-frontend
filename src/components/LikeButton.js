@@ -1,7 +1,8 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Icon, Label, Button } from "semantic-ui-react";
+import { Icon, Button, Label } from "semantic-ui-react";
+import { LIKE_POST_MUTATION } from "../util/graphql";
 import MyPopup from "../util/MyPopup";
 
 function LikeButton({ user, post: { id, likeCount, likes } }) {
@@ -33,26 +34,28 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
   );
 
   return (
-    <Button as="div" labelPosition="right" onClick={likePost}>
-      <MyPopup content={liked ? "Unlike" : "Like"}>{likeButton}</MyPopup>
-      <Label as="a" basic color="teal" pointing="left">
-        {likeCount}
-      </Label>
-    </Button>
+    // <Button as="div" labelPosition="right" onClick={likePost}>
+    //   <MyPopup content={liked ? "Unlike" : "Like"}>{likeButton}</MyPopup>
+    //   <Label as="a" basic color="teal" pointing="left">
+    //     {likeCount}
+    //   </Label>
+    // </Button>
+    user ? (
+      <Button as="div" labelPosition="right" onClick={likePost}>
+        <MyPopup content={liked ? "Unlike" : "Like"}>{likeButton}</MyPopup>
+        <Label as="a" basic color="teal" pointing="left">
+          {likeCount}
+        </Label>
+      </Button>
+    ) : (
+      <Button labelPosition="right" as="a" href="/login">
+        <MyPopup content={liked ? "Unlike" : "Like"}>{likeButton}</MyPopup>
+        <Label as="a" basic color="teal" pointing="left">
+          {likeCount}
+        </Label>
+      </Button>
+    )
   );
 }
-
-const LIKE_POST_MUTATION = gql`
-  mutation likePost($postId: ID!) {
-    likePost(postId: $postId) {
-      id
-      likes {
-        id
-        username
-      }
-      likeCount
-    }
-  }
-`;
 
 export default LikeButton;

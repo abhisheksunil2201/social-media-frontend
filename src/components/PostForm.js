@@ -1,9 +1,9 @@
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import React, { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 
 import { useForm } from "../util/hooks";
-import { FETCH_POSTS_QUERY } from "../util/graphql";
+import { CREATE_POST_MUTATION, FETCH_POSTS_QUERY } from "../util/graphql";
 import { UploadImage } from "./UploadImage";
 import "./PostForm.css";
 import CloseIcon from "@mui/icons-material/Close";
@@ -91,30 +91,5 @@ function PostForm() {
     </>
   );
 }
-
-const CREATE_POST_MUTATION = gql`
-  mutation createPost($body: String!, $media: String!) {
-    createPost(body: $body, media: $media) {
-      id
-      body
-      media
-      createdAt
-      username
-      likes {
-        id
-        username
-        createdAt
-      }
-      likeCount
-      comments {
-        id
-        body
-        username
-        createdAt
-      }
-      commentCount
-    }
-  }
-`;
 
 export default PostForm;

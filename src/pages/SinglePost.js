@@ -1,4 +1,4 @@
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import moment from "moment";
 import React, { useContext, useRef, useState } from "react";
 import {
@@ -16,6 +16,7 @@ import MyPopup from "../util/MyPopup";
 
 import { AuthContext } from "../context/auth";
 import { useHistory } from "react-router-dom";
+import { FETCH_POST_QUERY, SUBMIT_COMMENT_MUTATION } from "../util/graphql";
 
 function SinglePost(props) {
   const history = useHistory();
@@ -47,7 +48,7 @@ function SinglePost(props) {
   }
 
   let postMarkup;
-  if (!getPost) {
+  if (loading) {
     postMarkup = <p>Loading post...</p>;
   } else {
     const {
@@ -78,6 +79,9 @@ function SinglePost(props) {
                 <Card.Header>{username}</Card.Header>
                 <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
                 <Card.Description>{body}</Card.Description>
+                {media && (
+                  <img className="post__img" src={media} alt="userPost" />
+                )}
               </Card.Content>
               <hr />
               <Card.Content extra>
@@ -147,43 +151,5 @@ function SinglePost(props) {
   }
   return postMarkup;
 }
-
-const SUBMIT_COMMENT_MUTATION = gql`
-  mutation ($postId: String!, $body: String!) {
-    createComment(postId: $postId, body: $body) {
-      id
-      comments {
-        id
-        body
-        createdAt
-        username
-      }
-      commentCount
-    }
-  }
-`;
-
-const FETCH_POST_QUERY = gql`
-  query ($postId: ID!) {
-    getPost(postId: $postId) {
-      id
-      body
-      createdAt
-      username
-      likeCount
-      likes {
-        username
-      }
-      commentCount
-      comments {
-        id
-        username
-        createdAt
-        body
-      }
-      media
-    }
-  }
-`;
 
 export default SinglePost;
