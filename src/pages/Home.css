@@ -1,0 +1,15 @@
+.createPost {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  margin: auto;
+  border: 1px solid lightgray;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  border-radius: 1rem;
+  color: gray;
+}
+.column {
+  box-shadow: none !important;
+}
