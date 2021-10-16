@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "semantic-ui-react";
 
 import { useForm } from "../util/hooks";
@@ -29,6 +29,7 @@ function PostForm() {
         },
       });
       values.body = "";
+      setMedia("none");
     },
   });
 
@@ -53,6 +54,8 @@ function PostForm() {
       setMedia("none");
     }
   };
+
+  useEffect(() => {}, [media]);
 
   return (
     <>
