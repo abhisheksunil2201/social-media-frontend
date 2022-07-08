@@ -20,7 +20,7 @@ const authLink = setContext(() => {
 });
 
 const httpLink = new HttpLink({
-  uri: "https://peoplemedia-backend.herokuapp.com/",
+  uri: "https://peoplemedia-backend.herokuapp.com/graphql",
 });
 
 //apollo client setup
